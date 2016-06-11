@@ -8,7 +8,7 @@ const initialState = [
   }
 ]
 
-export default function todos(state = initialState, action) {
+function todos(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
       return [
@@ -52,3 +52,12 @@ export default function todos(state = initialState, action) {
       return state
   }
 }
+
+function todos_and_localstorage(state = initialState, action) {
+  let localState = localStorage.getItem('todos')
+  state = todos(localState ? JSON.parse(localState) : state, action)
+  localStorage.setItem('todos', JSON.stringify(state))
+  return state
+}
+
+export default  todos_and_localstorage
